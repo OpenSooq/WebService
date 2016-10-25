@@ -1,0 +1,17 @@
+{
+    "name": "opensooq/web-service",
+    "type": "composer-plugin",
+    "authors": [
+        {
+            "name": "Khadijah",
+            "email": "khadijah.s@opensooq.com"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "opensooq\\webservice\\": ""
+      }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
