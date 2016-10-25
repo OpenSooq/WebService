@@ -36,19 +36,28 @@ class WebService
      */
     private $_curl = null;
 
+    /**
+     * @var array Build Query String
+     */
     private $_data =[];
+    /**
+     * @var array default heaers
+     * Custom options holder
+     */
+    private $_headers = ['Expect'=>null];
     /**
      * @var array default curl options
      * Default curl options
      */
-    private $_defaultOptions = array(
+    private $_defaultOptions = [
         CURLOPT_USERAGENT      => 'OpenSooqClient 1.0',
+        CURLOPT_HTTPHEADER     => ['Expect:'],
         CURLOPT_TIMEOUT        => 10,
         CURLOPT_CONNECTTIMEOUT => 30,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_HEADER         => false,
         CURLOPT_BINARYTRANSFER => true,
-    );
+    ];
 
     /**
      * Start performing GET-HTTP-Request
@@ -85,6 +94,17 @@ class WebService
     {
         $this->setOption(CURLOPT_POST, true);
         $this->setOption(CURLOPT_POSTFIELDS, $this->_getBuildQuery());
+        return $this->_httpRequest('POST', $url, $raw);
+
+    }
+    /**
+     * Start performing POST-HTTP-Request
+     * @return $this
+     */
+    public function jsonPost($url, $raw = true) {
+
+        $this->setOption(CURLOPT_POSTFIELDS, json_encode($this->_data));
+        $this->setHeaders(['Content-Type'=> 'application/json','Content-Length'=> strlen(json_encode($this->_data))]);
         return $this->_httpRequest('POST', $url, $raw);
 
     }
@@ -237,9 +257,10 @@ class WebService
             $this->_options = [];
         }
         //reset response & status code
-        $this->_data=[];
-        $this->_curl = null;
-        $this->response = null;
+        $this->_data        = [];
+        $this->_headers     = ['Expect'=>null];
+        $this->_curl        = null;
+        $this->response     = null;
         $this->responseCode = null;
         return $this;
     }
@@ -289,6 +310,46 @@ class WebService
     }
 
     /**
+     * Set curl header
+     * @param $name string
+     * @param $value string
+     * @return $this
+     */
+    public function setHeader($name, $value)
+    {
+        $this->_headers[$name]= $value;
+        return $this;
+    }
+
+    /**
+     *  Set curl headers
+     * @param $headers
+     * @return $this
+     */
+    public function setHeaders($headers)
+    {
+        $this->_headers = $headers + $this->_headers;
+        return $this;
+    }
+
+    /**
+     * return curl headers on curl format
+     * @return array
+     */
+    public function getHeaders()
+    {
+        $headers= [];
+        foreach ($headers as $name => $value) {
+            if (is_null($value)) {
+                $value='';
+            }
+            array_push($headers, "$name: $value");
+        }
+        return $headers;
+    }
+
+
+    /**
      * Get curl info according to http://php.net/manual/de/function.curl-getinfo.php
      *
      * @return mixed
@@ -324,6 +385,7 @@ class WebService
             $this->setOption(CURLOPT_NOBODY, true);
             $this->unsetOption(CURLOPT_WRITEFUNCTION);
         }
+        $this->setOption(CURLOPT_HTTPHEADER, $this->getHeaders());
         /**
          * proceed curl
          */
@@ -349,7 +411,7 @@ class WebService
         if ($this->getOption(CURLOPT_CUSTOMREQUEST) === 'HEAD') {
             return true;
         } else {
-            $this->response = $raw ? $this->response : josn_decode::decode($this->response);
+            $this->response = $raw ? $this->response : json_decode($this->response);
             return $this->response;
         }
     }
