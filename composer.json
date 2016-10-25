@@ -1,6 +1,6 @@
 {
     "name": "opensooq/web-service",
-    "type": "composer-plugin",
+    "type": "library",
     "authors": [
         {
             "name": "Khadijah",
