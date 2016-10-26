@@ -15,6 +15,7 @@ namespace opensooq\webservice;
  */
 class WebService
 {
+
     /**
      * @var string
      * Holds response data right after sending a request.
@@ -234,10 +235,12 @@ class WebService
      * @return $this
      */
 
-    public function unsetData($key)
+    public function unsetData($key=null)
     {
-        //reset a single option if its set already
-        if (isset($this->_data[$key])) {
+        if (is_null($key)) {
+            $this->_data = [];
+        } elseif (isset($this->_data[$key])) {
+            //reset a single option if its set already
             unset($this->_data[$key]);
         }
         return $this;
