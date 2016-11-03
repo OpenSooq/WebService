@@ -354,45 +354,6 @@ class WebService
     }
 
 
-    /**
-     * Set curl header
-     * @param $name string
-     * @param $value string
-     * @return $this
-     */
-    public function setHeader($name, $value)
-    {
-        $this->_headers[$name]= $value;
-        return $this;
-    }
-
-    /**
-     *  Set curl headers
-     * @param $headers
-     * @return $this
-     */
-    public function setHeaders($headers)
-    {
-        $this->_headers = $headers + $this->_headers;
-        return $this;
-    }
-
-    /**
-     * return curl headers on curl format
-     * @return array
-     */
-    public function getHeaders()
-    {
-        $headers= [];
-        foreach ($headers as $name => $value) {
-            if (is_null($value)) {
-                $value='';
-            }
-            array_push($headers, "$name: $value");
-        }
-        return $headers;
-    }
-
 
     /**
      * Get curl info according to http://php.net/manual/de/function.curl-getinfo.php
