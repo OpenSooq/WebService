@@ -1,5 +1,5 @@
 <?php
-
+namespace opensooq\webservice;
 class HttpClient {
     public static $commonOptions=[
         CURLOPT_USERAGENT      => 'OpenSooqClient 1.0',
