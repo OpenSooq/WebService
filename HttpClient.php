@@ -52,12 +52,12 @@ class HttpClient {
         curl_setopt_array($handler, $opt);
         if (! $response = curl_exec($handler)) {
             return [
-                [
+               'info' => [
                     'code'=>'',
                     'Content-Type'=>'',
                     'curl-Error'=>curl_error($handler)
                 ],
-                ''
+                'response' =>null
             ];
         }
         $info=[
@@ -65,6 +65,9 @@ class HttpClient {
             'Content-Type' => curl_getinfo($handler, CURLINFO_CONTENT_TYPE),
             'curl-Error'   => null
         ];
+        if (static::is_JSON($response)) {
+            $response = json_decode($response);
+        }
         return ['info'=>$info, 'response'=>$response];
     }
     private static function _urlWithGetParams($url,$getParams=null) {
@@ -73,6 +76,10 @@ class HttpClient {
                 . (is_string($getParams) ? $getParams : http_build_query($getParams));
         }
         return $url;
+    }
+    private static function is_JSON($args) {
+        json_decode($args);
+        return (json_last_error()===JSON_ERROR_NONE);
     }
     /**
      * return curl headers on curl format
