@@ -42,7 +42,7 @@ class HttpClient {
             $opt[CURLOPT_NOBODY]=true;
         } elseif (is_string($body)) {
             $opt[CURLOPT_POSTFIELDS]=$body;
-        } elseif (!$isJson) {
+        } elseif ($isJson) {
             $opt[CURLOPT_POSTFIELDS]=json_encode($body);
         } else {
             $opt[CURLOPT_POSTFIELDS]=http_build_query($body);
