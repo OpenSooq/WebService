@@ -50,21 +50,26 @@ class HttpClient {
         }
         $handler = curl_init();
         curl_setopt_array($handler, $opt);
+        curl_setopt($handler, CURLINFO_HEADER_OUT, true);
         if (! $response = curl_exec($handler)) {
             return [
-               'info' => [
-                    'code'=>'',
-                    'Content-Type'=>'',
-                    'curl-Error'=>curl_error($handler)
+                'info' => [
+                    'code'=>curl_getinfo($handler, CURLINFO_HTTP_CODE),
+                    'Content-Type'=>curl_getinfo($handler, CURLINFO_CONTENT_TYPE),
+                    'curl-error'=>curl_error($handler),
+                    'curl-header' =>curl_getinfo($handler,'CURLINFO_HEADER_OUT'),
                 ],
                 'response' =>null
             ];
         }
+    
         $info=[
             'code'         => curl_getinfo($handler, CURLINFO_HTTP_CODE),
             'Content-Type' => curl_getinfo($handler, CURLINFO_CONTENT_TYPE),
-            'curl-Error'   => null
+            'curl-error'   => null,
+            'curl-header' =>curl_getinfo($handler,'CURLINFO_HEADER_OUT'),
         ];
+    
         if (static::is_JSON($response)) {
             $response = json_decode($response);
         }
