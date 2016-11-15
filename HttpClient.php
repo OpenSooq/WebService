@@ -57,7 +57,7 @@ class HttpClient {
                     'code'=>curl_getinfo($handler, CURLINFO_HTTP_CODE),
                     'Content-Type'=>curl_getinfo($handler, CURLINFO_CONTENT_TYPE),
                     'curl-error'=>curl_error($handler),
-                    'curl-header' =>curl_getinfo($handler,'CURLINFO_HEADER_OUT'),
+                    'curl-header' =>curl_getinfo($handler,CURLINFO_HEADER_OUT),
                 ],
                 'response' =>null
             ];
@@ -67,7 +67,7 @@ class HttpClient {
             'code'         => curl_getinfo($handler, CURLINFO_HTTP_CODE),
             'Content-Type' => curl_getinfo($handler, CURLINFO_CONTENT_TYPE),
             'curl-error'   => null,
-            'curl-header' =>curl_getinfo($handler,'CURLINFO_HEADER_OUT'),
+            'curl-header' =>curl_getinfo($handler,CURLINFO_HEADER_OUT),
         ];
     
         if (static::is_JSON($response)) {
