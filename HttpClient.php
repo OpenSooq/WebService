@@ -30,7 +30,7 @@ class HttpClient {
         // Check if the header is Application Json
         $isJson = false;
 
-        if(isset($headers['Content-Type'])) {
+        if(isset($headers['Content-Type']) && $headers['Content-Type'] =='application/json') {
             $isJson = true;
         }
         $headers = static::_formatHeaders($headers);
