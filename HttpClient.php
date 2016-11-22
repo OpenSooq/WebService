@@ -17,8 +17,8 @@ class HttpClient {
 
     }
     public static function get($url, $getParams=[], $headers=[],$options=[]) {
-        return static::request('GET',$url,$getParams,null,$headers, $options);
-
+        return static::request('GET',$url,$getParams,[],$headers, $options);
+        
     }
 
     public static function jsonPost($url,$postParams,$getParams=[], $headers=[], $options=[]) {
@@ -29,7 +29,7 @@ class HttpClient {
         $opt     = $options + static::$commonOptions;
         // Check if the header is Application Json
         $isJson = false;
-
+        
         if(isset($headers['Content-Type']) && $headers['Content-Type'] =='application/json') {
             $isJson = true;
         }
@@ -37,16 +37,16 @@ class HttpClient {
         $opt[CURLOPT_HTTPHEADER]   = $headers + $opt[CURLOPT_HTTPHEADER];
         $opt[CURLOPT_CUSTOMREQUEST] = $verb;
         $opt[CURLOPT_URL]           = static::_urlWithGetParams($url,$getParams);
-
+        
         if ($body===null) {
             $opt[CURLOPT_NOBODY]=true;
         } elseif (is_string($body)) {
             $opt[CURLOPT_POSTFIELDS]=$body;
         } elseif ($isJson) {
             $opt[CURLOPT_POSTFIELDS]=json_encode($body);
-        } else {
+        } elseif(!empty($body)) {
             $opt[CURLOPT_POSTFIELDS]=http_build_query($body);
-
+            
         }
         $handler = curl_init();
         curl_setopt_array($handler, $opt);
