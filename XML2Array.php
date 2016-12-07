@@ -25,7 +25,7 @@ class XML2Array {
      * @param bool $elementCount
      * @return array
      */
-    public static function parse($xmlString, $tagName = false, $elementCount = false)
+    public static function createArray($xmlString, $tagName = false, $elementCount = false)
     {
         $doc = new \DOMDocument();
         try {
