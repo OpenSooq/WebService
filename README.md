@@ -35,6 +35,7 @@ Usage
 //Init webservice
 $webservice = new Webservice();
 $response = $webservice->setData(['myPostField' => 'value'])->post('http://example.com/');
+```
 
  - GET
  
@@ -42,3 +43,4 @@ $response = $webservice->setData(['myPostField' => 'value'])->post('http://examp
 //Init webservice
 $webservice = new Webservice();
 $response = $webservice->setData(['myPostField' => 'value'])->get('http://example.com/');
+```
