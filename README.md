@@ -31,8 +31,14 @@ Usage
 -----
  - POST
 
-
 ```php
 //Init webservice
 $webservice = new Webservice();
-$response = $webservice->setData(['myPostField' => 'value']) ->post('http://example.com/');
+$response = $webservice->setData(['myPostField' => 'value'])->post('http://example.com/');
+
+ - GET
+ 
+```php
+//Init webservice
+$webservice = new Webservice();
+$response = $webservice->setData(['myPostField' => 'value'])->get('http://example.com/');
