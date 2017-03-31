@@ -1,5 +1,8 @@
 webservice extension
 ===================
+
+This is extension for Yii Framework (http://www.yiiframework.com/), which can easy add RESTful API to existing web application.
+
 curl extension for Yii2:
 
  - POST
