@@ -26,9 +26,16 @@ php composer.phar require --prefer-dist opensooq/webservice "*"
 
 Usage
 -----
- - POST
-
+ - GET
 
 ```php
-//Init git
+//Init webservice
 $response = HttpClient::get($url,$params,$header,$op);
+```
+
+ - POST
+
+```php
+//Init webservice
+$response = HttpClient::post($url,$params,$header,$op);
+```
