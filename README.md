@@ -30,6 +30,5 @@ Usage
 
 
 ```php
-//Init webservice
-$webservice = new Webservice();
-$response = $webservice->setData(['myPostField' => 'value']) ->post('http://example.com/');
+//Init git
+$response = HttpClient::get($url,$params,$header,$op);
