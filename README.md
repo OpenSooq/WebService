@@ -1,4 +1,4 @@
-webservice extension
+WebService extension
 ====================
 
 curl extension for Yii2:
